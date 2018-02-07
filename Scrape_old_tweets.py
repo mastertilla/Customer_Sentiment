@@ -2,10 +2,10 @@ import tweepy
 import pandas as pd
 
 # Specify the account credentials in the following variables:
-consumer_key = 'aaaaaa'
-consumer_secret = 'aaaaaa'
-access_token = 'aaaaaa'
-access_token_secret = 'aaaaaa'
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_token_secret = ''
 
 
 # Authenticate
