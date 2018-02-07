@@ -20,10 +20,7 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
-#searchwords = ['@curryspcworld','@TeamKnowhowUK']
-
-searchwords = ['nba', 'basketball']
-
+searchwords = ['curryspcworld', 'TeamKnowhowUK']
 
 #This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
@@ -35,15 +32,14 @@ class StdOutListener(StreamListener):
 
         date = datajson['created_at']
         tweet = datajson['text']
+        user = datajson['user']
 
+        user_dict = {}
+        for item, value in user.items():
+            user_dict.update({item: value})
+        username = user_dict['name']
 
-
-        '''dataset_live = []
-
-        # grab the 'created_at' data from the Tweet to use for display
-        dataset_live.append({'created': datajson['created_at'], 'tweet': datajson['text'], 'user': datajson['user']})'''
-
-        dataset = pd.DataFrame(dataset_live)
+        dataset = pd.DataFrame({'date': date, 'tweet_text': tweet, 'username': username}, index=[0])
         dataset.to_csv('Newtweets_currys.csv', sep=';', mode='a', header=False)
 
         return True
