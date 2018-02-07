@@ -36,13 +36,6 @@ class StdOutListener(StreamListener):
         date = datajson['created_at']
         tweet = datajson['text']
 
-        user = []
-        i = 1
-        for item in datajson['user']:
-
-            i = i+1
-
-        name = user['name']
 
 
         '''dataset_live = []
