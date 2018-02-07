@@ -8,10 +8,10 @@ import pandas as pd
 import json
 
 # Specify the account credentials in the following variables:
-consumer_key = '4VB2qMsbzAoN5n7CnFBlyawNF'
-consumer_secret = 'a8mhO2t2ZyWnBxJpkNXPxA4FELi2l8zn5vu8WcfxsiMexfBLhY'
-access_token = '274720570-BQptEbg3sNThYgaywDmfCDVmPVwKIUQGGT9pY9Ny'
-access_token_secret = 'WfosewkX06ubVqQG1h1NjNBt1FRIlTV2DMdT1Y7AbnR0f'
+consumer_key = ''
+consumer_secret = ''
+access_token = ''
+access_token_secret = ''
 
 
 # Authenticate
