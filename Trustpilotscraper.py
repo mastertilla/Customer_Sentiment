@@ -11,7 +11,7 @@ from selenium.webdriver.common.keys import Keys
 browser = webdriver.Chrome()
 
 # the url we want to open
-url = u'https://www.currys.co.uk/gbuk/phones-broadband-and-sat-nav/mobile-phones-and-accessories/mobile-phones/apple-iphone-8-64-gb-space-grey-10168742-pdt.html?intcmpid=display~RR'
+url = u'https://uk.trustpilot.com/review/www.currys.co.uk'
 
 # the browser will start and load the webpage
 browser.get(url)
@@ -27,7 +27,7 @@ body.send_keys(Keys.PAGE_DOWN)
 
 # we search for an element that is called 'customer reviews', which is a button
 # the button can be clicked with the .click() function
-browser.find_element_by_link_text("Customer reviews").click();
+#browser.find_element_by_link_text("Customer reviews").click();
 
 # we need to scroll further down to collect the reviews and especially click the next button
 body.send_keys(Keys.PAGE_DOWN)
@@ -37,12 +37,9 @@ time.sleep(1)
 
 # loop the following 10 times
 for _ in range(10):
-    # search for the next button to access the next reviews
-    browser.find_element_by_link_text('Next').click()
-
     # scroll down to get the reviews
-    body.send_keys(Keys.PAGE_DOWN)
-    time.sleep(1)
+#    body.send_keys(Keys.PAGE_DOWN)
+#    time.sleep(1)
 
     # get the page content for beautiful soup
     html_source = browser.page_source
