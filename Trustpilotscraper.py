@@ -47,3 +47,16 @@ for i in reviews_page:
             print("Review " + d.text)
             dataset = pd.DataFrame({'review': d.text}, index=[0])
             dataset.to_csv('Trustpilot_reviews.csv', sep=';', mode='a', header=False)
+
+        for time in soup.findAll('time'):
+            if time.has_attr('datetime'):
+                date1 = (time['datetime'])
+                datetime = date1.split("T")
+                date = datetime[0]
+                date = date.split("T")
+
+                year = date[0]
+                month = date[1]
+                day = date[2]
+
+
