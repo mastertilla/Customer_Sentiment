@@ -29,9 +29,6 @@ for i in reviews_page:
     # we load the HTML body (the main page content without headers, footers, etc.)
     body = browser.find_element_by_tag_name('body')
 
-    # sleep again, let everything load
-    time.sleep(1)
-
     # loop the following 10 times
     for _ in range(20):
         reviews = pd.DataFrame()
@@ -54,7 +51,7 @@ for i in reviews_page:
 
         date_reviews = pd.DataFrame()
         for d in soup.find_all('div', attrs={'class': 'review-info clearfix'}):
-            for time in d.findAll('time'):
+            for time in d.find_all('time'):
                 if time.has_attr('datetime'):
                     date1 = (time['datetime'])
                     datetime = date1.split("T")
