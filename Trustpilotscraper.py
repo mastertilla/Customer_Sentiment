@@ -17,7 +17,7 @@ for i in reviews_page:
     # the url we want to open
     url_basic = u'https://uk.trustpilot.com/review/www.currys.co.uk?page='
     page = i
-
+    # This builds up the url for each review page
     url = url_basic + str(i)
 
     # the browser will start and load the webpage
