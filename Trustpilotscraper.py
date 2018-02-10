@@ -23,8 +23,6 @@ for i in reviews_page:
     # the browser will start and load the webpage
     browser.get(url)
 
-    # we wait 1 second to let the page load everything
-    time.sleep(1)
 
     # we load the HTML body (the main page content without headers, footers, etc.)
     body = browser.find_element_by_tag_name('body')
@@ -44,7 +42,6 @@ for i in reviews_page:
         print("Review " + d.text)
         dataset = pd.DataFrame({'review': d.text}, index=[0])
         reviews_dataset = pd.concat([reviews_dataset, dataset])
-        #dataset.to_csv('Trustpilot_reviews.csv', sep=';', mode='a', header=False)
 
     date_reviews = pd.DataFrame()
     divTag = soup.find_all('div', attrs={'class': 'review-info clearfix'})
