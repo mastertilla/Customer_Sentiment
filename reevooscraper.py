@@ -25,6 +25,8 @@ headers = ['would buy again from Currys', 'on time and in good order', 'said enq
 # we load the HTML body (the main page content without headers, footers, etc.)
 body = browser.find_element_by_tag_name('body')
 
+number_of_reviews = 0;
+
 reviews = pd.DataFrame()
 for i in range(1, 8970):
 
@@ -66,6 +68,12 @@ for i in range(1, 8970):
 
     reviews = pd.concat([reviews_dataset, date_reviews_published, date_reviews_purchased], axis=1)
     reviews.to_csv('Reevoo_reviews.csv', sep=';', mode='a', header=False)
+
+    num_rev = reviews.shape
+    num_rev = num_rev[0]
+
+    number_of_reviews = number_of_reviews + num_rev
+    print("On page: " + str(i) + " with total reviews: " + str(number_of_reviews))
 
     body.send_keys(Keys.END)
 
