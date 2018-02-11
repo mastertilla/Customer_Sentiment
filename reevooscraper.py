@@ -14,6 +14,7 @@ def month_converter(month):
 # on learn, the Chrome webdriver is included, which is used here, make sure it is in the same folder as the py file
 browser = webdriver.Chrome()
 
+
 # the url we want to open
 url = u'https://www.reevoo.com/retailer/6-currys'
 
@@ -28,7 +29,9 @@ body = browser.find_element_by_tag_name('body')
 number_of_reviews = 0
 
 reviews = pd.DataFrame()
-for i in range(1, 8970):
+for i in range(1, 8990):
+
+    time.sleep(3)
 
     html_source = browser.page_source
 
@@ -75,9 +78,12 @@ for i in range(1, 8970):
     number_of_reviews = number_of_reviews + num_rev
     print("On page: " + str(i) + " with total reviews: " + str(number_of_reviews))
 
-    for j in range(1, 10):
-        body.send_keys(Keys.PAGE_DOWN)
-        time.sleep(1)
-        j = j + 1
+    '''for j in range(1, 20):
+    body.send_keys(Keys.PAGE_DOWN)
+    time.sleep(0.5)'''
+
+    body.send_keys(Keys.END)
+
+    time.sleep(3)
 
     browser.find_element_by_class_name('next_page').click()
