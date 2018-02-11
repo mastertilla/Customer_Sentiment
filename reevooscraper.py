@@ -20,6 +20,8 @@ url = u'https://www.reevoo.com/retailer/6-currys'
 # the browser will start and load the webpage
 browser.get(url)
 
+headers = ['would buy again from Currys', 'on time and in good order', 'said enquiries handled effectively']
+
 # we load the HTML body (the main page content without headers, footers, etc.)
 body = browser.find_element_by_tag_name('body')
 
@@ -34,9 +36,10 @@ for i in range(1, 8970):
     divTag = soup.find_all('p', attrs={'class': 'comment'})
     reviews_dataset = pd.DataFrame()
     for d in divTag:
-        print("Review: " + d.text)
-        dataset = pd.DataFrame({'review': d.text}, index=[0])
-        reviews_dataset = pd.concat([reviews_dataset, dataset])
+        review = d.text
+        if review not in headers:
+            dataset = pd.DataFrame({'review': review}, index=[0])
+            reviews_dataset = pd.concat([reviews_dataset, dataset])
 
     date_reviews_published = pd.DataFrame()
     divTag = soup.find_all('span', attrs={'class': 'date date_publish'})
@@ -63,3 +66,10 @@ for i in range(1, 8970):
 
     reviews = pd.concat([reviews_dataset, date_reviews_published, date_reviews_purchased], axis=1)
     reviews.to_csv('Reevoo_reviews.csv', sep=';', mode='a', header=False)
+
+    '''for j in range(1,7):
+        body.send_keys(Keys.PAGE_DOWN)'''
+
+    body.send_keys(Keys.END)
+
+    browser.find_element_by_class_name('next_page').click()
