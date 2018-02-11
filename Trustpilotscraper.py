@@ -10,7 +10,7 @@ from selenium.webdriver.common.keys import Keys
 # on learn, the Chrome webdriver is included, which is used here, make sure it is in the same folder as the py file
 browser = webdriver.Chrome()
 
-reviews_page = np.arange(1, 542, 1)
+reviews_page = np.arange(1, 543, 1)
 
 for i in reviews_page:
 
@@ -39,8 +39,12 @@ for i in reviews_page:
     divTag = soup.find_all('div', attrs={'class': 'review-body'})
     reviews_dataset = pd.DataFrame()
     for d in divTag:
-        print("Review " + d.text)
-        dataset = pd.DataFrame({'review': d.text}, index=[0])
+        review_original = d.text
+        review_only = review_original.split('\n                ')
+        review_only_ = review_only[1]
+        review_only_ = review_only_.split('\n')
+        review_only_text = review_only_[0]
+        dataset = pd.DataFrame({'review': review_only_text}, index=[0])
         reviews_dataset = pd.concat([reviews_dataset, dataset])
 
     date_reviews = pd.DataFrame()
