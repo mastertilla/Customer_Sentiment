@@ -77,6 +77,7 @@ for i in range(1, 8970):
 
     for j in range(1, 10):
         body.send_keys(Keys.PAGE_DOWN)
+        time.sleep(1)
         j = j + 1
 
     browser.find_element_by_class_name('next_page').click()
