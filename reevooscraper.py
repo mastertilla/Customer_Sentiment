@@ -67,9 +67,6 @@ for i in range(1, 8970):
     reviews = pd.concat([reviews_dataset, date_reviews_published, date_reviews_purchased], axis=1)
     reviews.to_csv('Reevoo_reviews.csv', sep=';', mode='a', header=False)
 
-    '''for j in range(1,7):
-        body.send_keys(Keys.PAGE_DOWN)'''
-
     body.send_keys(Keys.END)
 
     browser.find_element_by_class_name('next_page').click()
