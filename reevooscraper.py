@@ -13,6 +13,8 @@ def month_converter(month):
     return months.index(month) + 1
 
 
+browser = webdriver.Chrome()
+
 url1 = u'https://mark.reevoo.com/reevoomark/embeddable_customer_experience_reviews?ajax=true&page='
 url2 = u'&paginated=true&stylesheet_version=1.5&trkref=CYS'
 
@@ -24,10 +26,15 @@ reviews = pd.DataFrame()
 for i in range(1, 8990):
 
     url = url1 + str(i) + url2
-    website = urlopen(url)
+    browser.get(url)
+
+    # we load the HTML body (the main page content without headers, footers, etc.)
+    body = browser.find_element_by_tag_name('body')
+    # get the page content for beautiful soup
+    html_source = browser.page_source
 
     # see beautifulsoup
-    soup = BeautifulSoup(website, 'html.parser')
+    soup = BeautifulSoup(html_source, 'html.parser')
 
     divTag = soup.find_all('p', attrs={'class': 'comment'})
     reviews_dataset = pd.DataFrame()
