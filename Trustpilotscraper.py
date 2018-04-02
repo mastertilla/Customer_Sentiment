@@ -6,11 +6,11 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-# define the browser
-# on learn, the Chrome webdriver is included, which is used here, make sure it is in the same folder as the py file
 browser = webdriver.Chrome()
 
 reviews_page = np.arange(1, 543, 1)
+
+# For loop is used to construct all urls to avoid having to click
 
 for i in reviews_page:
 
@@ -35,7 +35,8 @@ for i in reviews_page:
     soup = BeautifulSoup(html_source, 'html.parser')
 
 
-    # find all the elements of class pros and print them
+    # Find class review-body that contains the review and store it
+    # The review is pre-processed before storing it
     divTag = soup.find_all('div', attrs={'class': 'review-body'})
     reviews_dataset = pd.DataFrame()
     for d in divTag:
@@ -47,6 +48,8 @@ for i in reviews_page:
         dataset = pd.DataFrame({'review': review_only_text}, index=[0])
         reviews_dataset = pd.concat([reviews_dataset, dataset])
 
+
+    # Find class review-info clearfix that contains the date of publication and store it
     date_reviews = pd.DataFrame()
     divTag = soup.find_all('div', attrs={'class': 'review-info clearfix'})
     for d in divTag:
@@ -68,8 +71,11 @@ for i in reviews_page:
                 dataset_time = pd.DataFrame({'Year': year, 'Month': month, 'Day': day}, index=[0])
                 date_reviews = pd.concat([date_reviews, dataset_time])
 
+    # Concatenate reviews with dates and write to csv
     reviews = pd.concat([reviews_dataset, date_reviews], axis=1)
     reviews.to_csv('Trustpilot_reviews.csv', sep=';', mode='a', header=False)
+
+    print("Page review number:" + str(i))
 
 
 
