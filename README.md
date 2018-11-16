@@ -8,5 +8,3 @@ Comments and reviews were scraped from Twitter, Reevoo.co.uk and Trustpilot.com 
 The methodology followed a series of steps. Firstly, the reviews were normalised and divided into sentences. Then, bigrams and most common words were used to identify keywords in the comments. These keywords were used to develop a boolean rule to classify each sentence.
 
 Finally, the sentiment of each sentence was analysed using Stanford and NLTK packages.
-
-HELLO NOEMI
