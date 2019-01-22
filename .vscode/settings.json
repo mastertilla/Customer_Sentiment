@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\Daniel.Navas\\.virtualenvs\\reinforcement_learning-EhzJORlU\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\Daniel.Navas\\AppData\\Local\\Continuum\\anaconda3\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "restructuredtext.confPath": "${workspaceFolder}\\source"
 }
