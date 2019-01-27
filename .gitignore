@@ -6,3 +6,4 @@ build/
 .tox/
 .vscode/
 .idea/
+customer_sentiment.egg-info/
