@@ -6,4 +6,5 @@ build/
 .tox/
 .vscode/
 .idea/
+cust_sent_env/
 customer_sentiment.egg-info/
