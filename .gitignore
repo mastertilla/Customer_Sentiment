@@ -3,3 +3,6 @@ _templates/
 
 build/
 
+.tox/
+.vscode/
+.idea/
