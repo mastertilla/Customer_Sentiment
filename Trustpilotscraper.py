@@ -1,18 +1,12 @@
 import pandas as pd
 import numpy as np
-
-import time
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
-# browser = webdriver.Chrome()
 browser = webdriver.Chrome('C:/Users/Daniel.Navas/Documents/personal_workspace/Customer_Sentiment/chromedriver.exe')
 
-reviews_page = np.arange(1, 543, 1)
-
+reviews_page = np.arange(1, 555, 1)
 # For loop is used to construct all urls to avoid having to click
-
 for i in reviews_page:
 
     # the url we want to open
@@ -38,11 +32,11 @@ for i in reviews_page:
 
     # Find class review-body that contains the review and store it
     # The review is pre-processed before storing it
-    divTag = soup.find_all('div', attrs={'class': 'review-body'})
+    divTag = soup.find_all('p', attrs={'class': 'review-content__text'})
     reviews_dataset = pd.DataFrame()
     for d in divTag:
         review_original = d.text
-        review_only = review_original.split('\n                ')
+        review_only = review_original.split('\n            ')
         review_only_ = review_only[1]
         review_only_ = review_only_.split('\n')
         review_only_text = review_only_[0]
@@ -52,7 +46,7 @@ for i in reviews_page:
 
     # Find class review-info clearfix that contains the date of publication and store it
     date_reviews = pd.DataFrame()
-    divTag = soup.find_all('div', attrs={'class': 'review-info clearfix'})
+    divTag = soup.find_all('div', attrs={'class': 'v-popover'})
     for d in divTag:
         for time in d.findAll('time'):
             update = []
