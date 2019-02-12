@@ -1,7 +1,7 @@
 _static/
 _templates/
 
-build/
+_build/
 
 .tox/
 .vscode/
