@@ -1,19 +1,19 @@
 import pandas as pd
 import re
+import os
 import numpy as np
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
 browser = webdriver.Chrome('C:/Users/Daniel.Navas/Documents/personal_workspace/Customer_Sentiment/chromedriver.exe')
 
-reviews_page = np.arange(1, 13, 1)
-# reviews_page = np.arange(1, 555, 1)
+reviews_page = np.arange(1, 555, 1)
 # For loop is used to construct all urls to avoid having to click
 for i in reviews_page:
 
     # the url we want to open
-    url_basic = u'https://uk.trustpilot.com/review/tandem.co.uk?page='
-    # url_basic = u'https://uk.trustpilot.com/review/www.currys.co.uk?page='
+    # url_basic = u'https://uk.trustpilot.com/review/tandem.co.uk?page='
+    url_basic = u'https://uk.trustpilot.com/review/www.currys.co.uk?page='
     page = i
     # This builds up the url for each review page
     url = url_basic + str(i)
