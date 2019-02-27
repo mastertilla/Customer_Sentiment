@@ -2,8 +2,11 @@ import nltk
 import os
 import re
 from nltk.stem import WordNetLemmatizer
+from utils.dataprep import tokenize_text, expand_contractions
 import pandas as pd
 import datetime
+from utils.contractions import CONTRACTION_MAP
+
 
 class DataPrep():
     def __init__(self, data=None):
@@ -14,7 +17,7 @@ class DataPrep():
             self.data_path = os.path.join(self.main_path, "..", "results", "2019-02-27_trustpilot_reviews.csv")
         else:
             self.data = data
-        
+
         self.stopwords = nltk.corpus.stopwords.words('english')
         self.lemmatizer = WordNetLemmatizer()
 
@@ -37,11 +40,23 @@ class DataPrep():
             document = document.strip()
             sentences = nltk.sent_tokenize(document)
             self.dict_sentences[id] = sentences
+            self.ids = list(self.dict_sentences.keys())
 
+    def clean_reviews(self):
+        for _, review_id in enumerate(self.ids):
+            sentences = expand_contractions(self.dict_sentences[review_id], CONTRACTION_MAP)
+            sentences = tokenize_text(sentences)
+            self.dict_sentences[review_id] = sentences
+            exit()
+
+    def do_all(self):
+        self.read_data()
+        self.parse_document()
+        self.clean_reviews()
 
 
 if __name__ == "__main__":
     data_prep = DataPrep()
     data_prep.read_data()
     data_prep.parse_document()
-    print(data_prep.dict_sentences)
+    data_prep.clean_reviews()
