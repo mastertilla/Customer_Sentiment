@@ -1,7 +1,9 @@
-import pandas as pd
-import re
-import numpy as np
+import datetime
 import os
+import re
+
+import numpy as np
+import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
@@ -13,7 +15,7 @@ class ReviewScrapper():
         else:
             self.url_company = url
 
-        self.review_pages = np.arange(1, 100, 1)
+        self.review_pages = np.arange(1, 150, 1)
         self.reviews = pd.DataFrame()
 
         self.path = os.path.dirname(__file__)
@@ -26,16 +28,24 @@ class ReviewScrapper():
             self.browser.get(self.url)
 
             self.load_html()
+            self.get_review_id()
             self.get_review_content()
             self.get_review_dates()
 
-            reviews_i = pd.DataFrame({'Review': self.review_text, 'Date': self.date})
+            reviews_i = pd.DataFrame({'Id':self.review_ids, 'Review': self.review_text, 'Date': self.date})
 
             self.reviews = pd.concat([self.reviews, reviews_i], axis=0, ignore_index=True)
 
     def load_html(self):
         self.html_source = self.browser.page_source
         self.bsoup_parse = BeautifulSoup(self.html_source, 'html.parser')
+
+    def get_review_id(self):
+        self.reviewid_tag = self.bsoup_parse.find_all('article', attrs={'class': 'review'})
+
+        self.review_ids = []
+        for d in self.reviewid_tag:
+            self.review_ids.append(d['id'])
 
     def get_review_content(self):
         self.review_tag = self.bsoup_parse.find_all('p', attrs={'class': 'review-content__text'})
@@ -60,10 +70,16 @@ class ReviewScrapper():
                 else:
                     self.date.append(np.nan)
 
+    def do_all(self):
+        self.initialise_browser()
+        self.iterate_through_pages()
+
 if __name__ == "__main__":
-    scrapper = ReviewScrapper(url=u'https://uk.trustpilot.com/review/tandem.co.uk?page=')
+    main_path = os.path.dirname(__file__)
+    scrapper = ReviewScrapper(url=u'https://uk.trustpilot.com/review/www.currys.co.uk?page=')
     scrapper.initialise_browser()
     scrapper.iterate_through_pages()
 
-    scrapper.reviews.to_csv('results.csv', sep=',')
+    file_name = str(datetime.datetime.today().strftime('%Y-%m-%d')) + '_trustpilot_reviews.csv'
+    scrapper.reviews.to_csv(os.path.join(main_path, "..", "results", file_name), sep=',')
     

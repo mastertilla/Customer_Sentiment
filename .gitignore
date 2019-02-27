@@ -11,3 +11,5 @@ cust_sent_env/
 customer_sentiment.egg-info/
 
 **.csv
+**.xlsx
+**.log
