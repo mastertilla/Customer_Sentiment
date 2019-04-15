@@ -3,17 +3,17 @@ import re
 
 def tokenize_text(sentences):
     tokenised_sentences = []
-    for sentence in sentences:
-        print(sentence)
-        tokens = [sentence.split(' ')]
-        print(tokens)
-        # contractions_pattern = re.compile('({})'.format('|'.join(contraction_mapping.keys())), flags=re.IGNORECASE | re.DOTALL)
-        #
-        # expanded_text = contractions_pattern.sub(expand_match, sentence)
-        # expanded_text = re.sub("'", "", expanded_text)
-        # print(expanded_text)
 
-        tokenised_sentences.append(tokens)
+    print(sentences)
+    tokens = [sentences.split(' ')]
+    print(tokens)
+    # contractions_pattern = re.compile('({})'.format('|'.join(contraction_mapping.keys())), flags=re.IGNORECASE | re.DOTALL)
+    #
+    # expanded_text = contractions_pattern.sub(expand_match, sentence)
+    # expanded_text = re.sub("'", "", expanded_text)
+    # print(expanded_text)
+
+    tokenised_sentences.append(tokens)
 
     return tokenised_sentences
 
@@ -35,3 +35,5 @@ def expand_contractions(sentences, contraction_mapping):
         expanded_text = contractions_pattern.sub(expand_match, sentence)
         expanded_text = re.sub("'", "", expanded_text)
         print(expanded_text)
+
+        return expanded_text

@@ -6,6 +6,7 @@ from utils.dataprep import tokenize_text, expand_contractions
 import pandas as pd
 import datetime
 from utils.contractions import CONTRACTION_MAP
+import contractions
 
 
 class DataPrep():
@@ -14,7 +15,7 @@ class DataPrep():
         self.data = None
 
         if data is None:
-            self.data_path = os.path.join(self.main_path, "..", "results", "2019-02-27_trustpilot_reviews.csv")
+            self.data_path = os.path.join(self.main_path, "..", "results", "2019-04-15_trustpilot_reviews.csv")
         else:
             self.data = data
 
@@ -44,10 +45,13 @@ class DataPrep():
 
     def clean_reviews(self):
         for _, review_id in enumerate(self.ids):
-            sentences = expand_contractions(self.dict_sentences[review_id], CONTRACTION_MAP)
-            sentences = tokenize_text(sentences)
-            self.dict_sentences[review_id] = sentences
-            exit()
+            for sentences in self.dict_sentences[review_id]:
+                print(sentences)
+                decontracted_sentence = contractions.fix(sentences)
+                # sentences = expand_contractions(self.dict_sentences[review_id], CONTRACTION_MAP)
+                sentences = tokenize_text(decontracted_sentence)
+                print(sentences)
+                # self.dict_sentences[review_id] = sentences
 
     def do_all(self):
         self.read_data()
@@ -60,3 +64,5 @@ if __name__ == "__main__":
     data_prep.read_data()
     data_prep.parse_document()
     data_prep.clean_reviews()
+
+    print(data_prep.dict_sentences)
