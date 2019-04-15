@@ -24,7 +24,7 @@ copyright = '2019, Daniel Montilla Navas'
 author = 'Daniel Montilla Navas'
 
 # The short X.Y version
-version = ''
+version = '1.0'
 # The full version, including alpha/beta/rc tags
 release = '2019'
 
