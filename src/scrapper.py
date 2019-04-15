@@ -20,7 +20,8 @@ class ReviewScrapper():
 
         self.path = os.path.dirname(__file__)
     def initialise_browser(self):
-        self.browser = webdriver.Chrome(os.path.join(self.path, '..', 'chromedriver.exe'))
+        # self.browser = webdriver.Chrome(os.path.join(self.path, 'chromedriver.exe')) 
+        self.browser = webdriver.Chrome()
 
     def iterate_through_pages(self):
         for i in self.review_pages:
