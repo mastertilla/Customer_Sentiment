@@ -15,3 +15,5 @@ customer_sentiment.egg-info/
 **.xlsx
 **.log
 **.exe
+**.pyc
+chromedriver
