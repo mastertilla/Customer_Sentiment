@@ -11,7 +11,7 @@ Options:
   --version       Show version.
   --scrape=<y/n>  Run scrapper (yes/no)
 """
-
+import os
 from src.scrapper import ReviewScrapper
 from src.data_cleaning import DataPrep
 import time
@@ -19,6 +19,7 @@ import time
 from docopt import docopt
 
 if __name__=="__main__":
+    main_path = os.path.dirname(__file__)
     start = time.time()
     arguments = docopt(__doc__, version='1.0')
     if arguments['--scrape'] == 'y':
@@ -32,6 +33,8 @@ if __name__=="__main__":
     data_prep.parse_document()
     data_prep.cleaning_reviews()
     data_prep.return_dataframe()
+
+    data_prep.reviews_cleaned.to_csv(os.path.join(main_path, 'results', 'cleaned_reviews.csv'), sep=',')
 
     print("Took %.2f seconds" %(time.time() - start))
 

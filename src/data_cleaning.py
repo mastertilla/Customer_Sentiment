@@ -24,6 +24,8 @@ class DataPrep():
         self.dict_sentences = {}
         self.individual_sentences = {}
 
+        self.reviews = []
+
     def read_data(self):
         if self.data is None:
             self.data = pd.read_csv(self.data_path, sep=',')
@@ -46,7 +48,7 @@ class DataPrep():
             self.ids = list(self.dict_sentences.keys())
 
     def cleaning_reviews(self, remove_contractions=True, remove_special_characters=True,
-                         remove_stopwords=False, lemmatise=True, tokenise=False):
+                         remove_stopwords=False, lemmatise=True, tokenise=True):
         """
         This function preprocesses the reviews, carrying out multiple datapreprocessing steps including:
 
@@ -59,7 +61,7 @@ class DataPrep():
             6. Tokenise (default=False) - Store end results as either tokens or sentences
         """
         ids = []
-        reviews = []
+
         for _, review_id in enumerate(self.ids):
             for sentence in self.dict_sentences[review_id]:
                 # Remove contractions from characters
@@ -84,13 +86,13 @@ class DataPrep():
 
                 if tokenise is False:
                     ids.append(review_id)
-                    reviews.append(' '.join(tokens))
+                    self.reviews.append(' '.join(tokens))
                 else:
                     ids.append(review_id)
-                    reviews.append(tokens)
+                    self.reviews.append(tokens)
 
         self.individual_sentences['review_id'] = ids
-        self.individual_sentences['review'] = reviews
+        self.individual_sentences['review'] = self.reviews
 
     def return_dataframe(self):
         self.reviews_cleaned = pd.DataFrame.from_dict(self.individual_sentences, orient='columns')
