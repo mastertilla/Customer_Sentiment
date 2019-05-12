@@ -1,5 +1,5 @@
 # Sentiment Analysis Tool
-This tool scrappes, cleans and provides the sentiment of the sentences encountered in online reviews. In particular, the results presentes are those of Curry's reviews on Truspilot. 
+This tool scrappes, cleans and provides the sentiment of the sentences encountered in online reviews. In particular, the results presented are those of Curry's reviews on Truspilot. 
 
 ## Getting started
 
@@ -20,6 +20,8 @@ The Sentiment Analysis tool makes use of the NLPCore Algorithm developed at stan
 2. Download and unzip CoreNLP from https://stanfordnlp.github.io/CoreNLP/ in your preferred location
 3. In the terminal, navigate to the CoreNLP folder.
 4. Run ``java -mx6g -cp "*" edu.stanford.nlp.pipeline.StanfordCoreNLPServer -timeout 5000``
+
+You also need to download Chromedriver (http://chromedriver.chromium.org/downloads) and save the .exe file into the repo folder.
 
 ### Installing
 
