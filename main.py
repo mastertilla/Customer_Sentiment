@@ -14,6 +14,7 @@ Options:
 import os
 from src.scrapper import ReviewScrapper
 from src.data_cleaning import DataPrep
+from src.sent_analysis import SentimentAnalysis
 import time
 
 from docopt import docopt
@@ -24,17 +25,16 @@ if __name__=="__main__":
     arguments = docopt(__doc__, version='1.0')
     if arguments['--scrape'] == 'y':
         scrapper = ReviewScrapper(url=u'https://uk.trustpilot.com/review/www.currys.co.uk?page=')
-        scrapper.do_all()
+        scrapper.do_all_scrapper()
         data_prep = DataPrep(data=scrapper.reviews)
     else:
         data_prep = DataPrep()
 
-    data_prep.read_data()
-    data_prep.parse_document()
-    data_prep.cleaning_reviews()
-    data_prep.return_dataframe()
+    data_prep.do_all_dataprep()
 
-    data_prep.reviews_cleaned.to_csv(os.path.join(main_path, 'results', 'cleaned_reviews.csv'), sep=',')
+    sentiment_model = SentimentAnalysis(reviews=data_prep.reviews_cleaned, test=True)
+    sentiment_model.do_all_sentiment()
+
 
     print("Took %.2f seconds" %(time.time() - start))
 
