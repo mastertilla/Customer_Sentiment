@@ -2,7 +2,6 @@
 
 Usage:
   main.py [--scrape=<y/n>]
-  main.py [--scrape|--sentiment]
   main.py -h | --help
   main.py --version
 

@@ -8,6 +8,22 @@ import contractions
 
 
 class DataPrep():
+    """
+    This class performs all the steps required for cleaning the reviews, outputing both the tokenised version and the full sentence version of the review after cleansing.
+
+    The specific steps are:
+
+    1. Remove contractions (default=True) - Remove all contractions from the sentence
+    2. Sentence is then tokenised for further preprocessing
+    3. Remove special characters (default=True) - Remove special characters from tokens
+    4. Remove stopwords (default=False) - The removal of stopwords is set to false based on the assumptions
+        that stopwords do have an impact on the sentiment of the sentence.
+    5. Lemmatise (default=True) - Lemmatise the words
+    6. Tokenise - Store end results as tokens and sentences
+
+    :param data: Raw reviews obtained through the scrapper
+    :type data: ``Pandas dataframe``
+    """
     def __init__(self, data=None):
         self.main_path = os.path.dirname(__file__)
         self.data = None
@@ -28,6 +44,9 @@ class DataPrep():
         self.reviews_join = []
 
     def read_data(self):
+        """
+        Read data and remove any duplicate reviews.
+        """
         if self.data is None:
             self.data = pd.read_csv(self.data_path, sep=',')
 
@@ -35,7 +54,9 @@ class DataPrep():
         self.data.drop_duplicates(subset=['Id'], inplace=True)
 
     def parse_document(self):
-
+        """
+        Parse reviews into sentences for better analysis. 
+        """
         for _, row in self.data.iterrows():
             id = row['Id']
             document = re.sub('\n', ' ', row['Review'])
@@ -94,6 +115,9 @@ class DataPrep():
         self.individual_sentences['review_join'] = self.reviews_join
 
     def return_dataframe(self):
+        """
+        Save data to csv to be analysed by Sentiment analysis tool.
+        """
         self.reviews_cleaned = pd.DataFrame.from_dict(self.individual_sentences, orient='columns')
         relevant_info = self.data.loc[:, ['Id', 'Date']]
         self.reviews_cleaned = self.reviews_cleaned.merge(relevant_info, left_on='review_id',
@@ -102,6 +126,9 @@ class DataPrep():
         self.reviews_cleaned.drop(columns=['Id'], inplace=True)
 
     def do_all_dataprep(self):
+        """
+        Do all functions required to run the data cleaning tool.
+        """
         self.read_data()
         self.parse_document()
         self.cleaning_reviews()
