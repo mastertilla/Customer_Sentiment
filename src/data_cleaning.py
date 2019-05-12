@@ -13,7 +13,7 @@ class DataPrep():
         self.data = None
 
         if data is None:
-            self.data_path = os.path.join(self.main_path, "..", "results", "2019-04-15_trustpilot_reviews.csv")
+            self.data_path = os.path.join(self.main_path, "..", "results", "2019-05-11_trustpilot_reviews.csv")
         else:
             self.data = data
 
@@ -25,6 +25,7 @@ class DataPrep():
         self.individual_sentences = {}
 
         self.reviews = []
+        self.reviews_join = []
 
     def read_data(self):
         if self.data is None:
@@ -48,7 +49,7 @@ class DataPrep():
             self.ids = list(self.dict_sentences.keys())
 
     def cleaning_reviews(self, remove_contractions=True, remove_special_characters=True,
-                         remove_stopwords=False, lemmatise=True, tokenise=True):
+                         remove_stopwords=False, lemmatise=True):
         """
         This function preprocesses the reviews, carrying out multiple datapreprocessing steps including:
 
@@ -58,7 +59,7 @@ class DataPrep():
             4. Remove stopwords (default=False) - The removal of stopwords is set to false based on the assumptions
                that stopwords do have an impact on the sentiment of the sentence.
             5. Lemmatise (default=True) - Lemmatise the words
-            6. Tokenise (default=False) - Store end results as either tokens or sentences
+            6. Tokenise - Store end results as tokens and sentences
         """
         ids = []
 
@@ -84,15 +85,13 @@ class DataPrep():
                 if lemmatise is True:
                     tokens = [self.lemmatizer.lemmatize(word) for word in tokens]
 
-                if tokenise is False:
-                    ids.append(review_id)
-                    self.reviews.append(' '.join(tokens))
-                else:
-                    ids.append(review_id)
-                    self.reviews.append(tokens)
+                ids.append(review_id)
+                self.reviews.append(tokens)
+                self.reviews_join.append(' '.join(tokens))
 
         self.individual_sentences['review_id'] = ids
         self.individual_sentences['review'] = self.reviews
+        self.individual_sentences['review_join'] = self.reviews_join
 
     def return_dataframe(self):
         self.reviews_cleaned = pd.DataFrame.from_dict(self.individual_sentences, orient='columns')
@@ -102,10 +101,11 @@ class DataPrep():
 
         self.reviews_cleaned.drop(columns=['Id'], inplace=True)
 
-    def do_all(self):
+    def do_all_dataprep(self):
         self.read_data()
         self.parse_document()
         self.cleaning_reviews()
+        self.return_dataframe()
 
 
 if __name__ == "__main__":
