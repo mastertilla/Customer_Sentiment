@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+autopep8 = "*"
+pytest = "*"
+
+[packages]
+numpy = "==1.16.3"
+pandas = "*"
+contractions = "==0.0.18"
+nltk = "==3.4"
+selenium = "==3.141.0"
+beautifulsoup4 = "==4.7.1"
+docopt = "*"
+pycorenlp = "*"
+
+[requires]
+python_version = "3.6"
